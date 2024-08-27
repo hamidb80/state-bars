@@ -19,7 +19,12 @@
 <body>
 
   <main>
-    <section id="app-page" class="container">
+    <h1 class="text-center my-4">
+      <span>Intro</span>
+      <i class="bi bi-info-circle"></i>
+    </h1>
+
+    <section id="landing-page" class="container">
       <div class="alert alert-primary">
         <strong>
           Hey, first time to visit!
@@ -30,32 +35,10 @@
         </p>
       </div>
 
-      <a href="/task-setting.html" smooth-link class="btn btn-sm btn-outline-primary w-100">
-        <span>new task</span>
-        <i class="bi bi-plus-square"></i>
+      <a href="/tasks.html" class="btn btn-outline-primary" smooth-link>
+        <span>go to app</span>
+        <i class="bi bi-box-arrow-right"></i>
       </a>
-
-      <div tasks>
-        <div rv-each-task="tasks">
-          <div class="row">
-            <h4 class="col-md-6 col-sm-12" dir="auto">
-              { task.name }
-            </h4>
-            <div class="col-md-6 col-sm-12 d-flex justify-content-end">
-              <div tv-each-action="task.actions" class="btn btn-sm btn-outline-dark">
-                { action.emoji }
-              </div>
-              <div class="btn btn-sm btn-outline-dark">
-                <i class="bi bi-three-dots"></i>
-              </div>
-            </div>
-          </div>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped" rv-style="task"></div>
-          </div>
-        </div>
-      </div>
-
     </section>
   </main>
 

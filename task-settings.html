@@ -33,15 +33,23 @@
           <input rv-value="task.name" name="task-name" type="text" class="form-control" placeholder="name">
         </fieldset>
         <fieldset class="my-2">
-          <textarea rv-value="task.desc" name="task-desc" class="form-control" rows="4" placeholder="description"></textarea>
+          <textarea rv-value="task.desc" name="task-desc" class="form-control" rows="4"
+            placeholder="description"></textarea>
         </fieldset>
         <fieldset class="my-2">
           <input rv-value="task.max" name="task-max" type="number" class="form-control" placeholder="max" step="1">
         </fieldset>
         <fieldset class="my-2">
-          <input rv-value="task.decrate" name="task-dec-rate" type="number" class="form-control" placeholder="decrease rate [per hour]"
-            step="1">
+          <input rv-value="task.decrate" name="task-dec-rate" type="number" class="form-control"
+            placeholder="decrease rate [per hour]" step="1">
         </fieldset>
+
+
+        <div class="form-check form-switch my-2">
+          <input class="form-check-input" type="checkbox" rv-checked="task.archived">
+          <span class="form-check-label">archived</span>
+          <i class="bi bi-archive"></i>
+        </div>
       </div>
 
 
@@ -53,15 +61,15 @@
           </button>
         </div>
         <div class="col col-12 col-sm-4">
-          <button class="btn btn-sm btn-outline-danger w-100 align-self-center">
-            <span>archive</span>
-            <i class="bi bi-archive"></i>
-          </button>
-        </div>
-        <div class="col col-12 col-sm-4">
-          <button class="btn btn-sm btn-outline-warning w-100 align-self-center">
+          <a href="/tasks.html" smooth-link class="btn btn-sm btn-outline-warning w-100 align-self-center">
             <span>cancel</span>
             <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+        <div class="col col-12 col-sm-4">
+          <button id="task-settings-delete" class="btn btn-sm btn-outline-danger w-100 align-self-center">
+            <span>delete</span>
+            <i class="bi bi-trash"></i>
           </button>
         </div>
       </div>
@@ -72,18 +80,29 @@
       </h3>
 
       <div rv-each-ac="task.actions" class="task-action">
-        <h3># {index}</h3>
+        <h3 class="row">
+          <p class="col">
+            <i class="bi bi-hash"></i><span>{index}</span>
+          </p>
+          <div class="col text-end">
+            <button class="btn btn-sm btn-outline-danger" rv-value="index" rv-task-settings-remove-action-click="index">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </h3>
 
         <fieldset class="my-2">
           <input rv-value="ac.name" name="action-name" type="text" class="form-control" placeholder="name">
         </fieldset>
 
         <fieldset class="my-2">
-          <input rv-value="ac.emoji" name="action-emoji" type="text" class="form-control" placeholder="emoji" maxlength="4">
+          <input rv-value="ac.emoji" name="action-emoji" type="text" class="form-control" placeholder="emoji"
+            maxlength="4">
         </fieldset>
 
         <fieldset class="my-2">
-          <input rv-value="ac.boost" name="action-boost" type="number" class="form-control" placeholder="boost" step="1">
+          <input rv-value="ac.boost" name="action-boost" type="number" class="form-control" placeholder="boost"
+            step="1">
         </fieldset>
       </div>
 
