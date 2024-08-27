@@ -128,6 +128,6 @@ up.compiler('#task-settings-apply', el => {
 
 up.compiler('#task-settings-add-action', el => {
   el.onclick = () => {
-
+    selectedTask.actions.push(newAction('', '', 0, ''))
   }
 })
