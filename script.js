@@ -1,5 +1,9 @@
 // -------- Other Utils -----------------
 
+function unow() {
+  return Math.floor(Date.now() / 1000)
+}
+
 function toArray(arrayLike) {
   return Array.from(arrayLike)
 }
@@ -37,7 +41,7 @@ function setItemDB(key, val) {
 // ------ Keys 
 
 const TasksK = 'tasks'
-const HistoryK = 'history'
+const RecordsK = 'history'
 
 // ------ Models
 
@@ -45,17 +49,18 @@ function newAction(name, emoji, boost, desc) {
   return { name, emoji, boost, desc }
 }
 
-function newTask(id, name, actions, max, decrate) {
-  return { id, name, actions, max, decrate, archived: false }
+function newTask(id, name, actions, max, decrate, created) {
+  return { id, name, actions, max, decrate, created, archived: false }
 }
 
-function newRecord(taskID, time, boost, desc) {
-  return { taskID, time, boost, title, desc }
+function newRecord(time, boost) {
+  return [time, boost]
 }
 
-// ------  Actions 
+// ------ Domain Logic
 
-function add(taskID, boost) {
+function computeState(task, records) {
+  task.decrate
 }
 
 // ------ DOM Utils
@@ -80,24 +85,39 @@ function setAttrs(el, attrsObj) {
 
 var tasks = undefined
 var selectedTask = undefined
+var records = undefined
 
-function getTasks() {
+
+function getAllTasks() {
   return getItemDB(TasksK) ?? {}
 }
-
-function saveTasks(tasksMap) {
-  return setItemDB(TasksK, tasksMap)
+function saveAllTasks(obj) {
+  return setItemDB(TasksK, obj)
 }
+
+function getAllRecords() {
+  return getItemDB(RecordsK) ?? {}
+}
+function saveAllRecords(obj) {
+  return setItemDB(RecordsK, obj)
+}
+
 
 function saveTask(task) {
   tasks[task.id] = task
-  saveTasks(tasks)
+  return saveAllTasks(tasks)
+}
+function saveRecordFor(taskid, time, boost) {
+  records[taskid].push(newRecord(time, boost))
+  return saveAllRecords(records)
+}
+function getRecordFor(taskid) {
+  return records[taskid] ?? []
 }
 
-
 function initGlobalsIfNot() {
-  if (tasks === undefined)
-    tasks = getTasks()
+  tasks = getAllTasks()
+  records = getAllRecords()
 }
 
 // ------ UI 
@@ -120,8 +140,14 @@ up.macro('[smooth-link]', link => {
 
 up.compiler('#app-page', el => {
   let all = Object.values(tasks)
-  let actives = all.filter(t => !t.archived)
+  let actives = all
+    .filter(t => !t.archived)
+    .map(task => ({
+      ...task,
+      state: computeState(task, getRecordFor(task.id))
+    }))
   let archives = all.filter(t => t.archived)
+
   rivets.bind(el, {
     active_tasks: actives,
     archived_tasks: archives
@@ -131,7 +157,8 @@ up.compiler('#app-page', el => {
 up.compiler('#task-settings-page', el => {
   let qp = new URLSearchParams(window.location.search)
   let taskid = qp.get('task-id')
-  selectedTask = taskid ? purify(tasks[taskid]) : newTask(uuid(), '', [], '', '')
+
+  selectedTask = taskid ? purify(tasks[taskid]) : newTask(uuid(), '', [], '', '', unow())
 
   rivets.binders['task-settings-remove-action-click'] = (el, index) => {
     el.onclick = () => {
@@ -152,6 +179,13 @@ up.compiler('#task-settings-apply', el => {
   el.onclick = () => {
     saveTask(selectedTask)
     console.log('saved!') // TODO notif
+  }
+})
+
+up.compiler('#task-settings-delete', el => {
+  el.onclick = () => {
+    delete tasks[selectedTask.id]
+    saveAllTasks(tasks)
   }
 })
 
