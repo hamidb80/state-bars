@@ -33,16 +33,16 @@
       </div>
     </nav>
 
-    <ul me>
-      <li rv-each-todo="todos">
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-            style="width: 75%;"></div>
-        </div>
-        <span>{ todo.desc }</span>
-      </li>
-    </ul>
-
+    <section id="app-page">
+      <ul tasks>
+        <li rv-each-task="tasks">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped" rv-style="task"></div>
+          </div>
+          <span>{ task }</span>
+        </li>
+      </ul>
+    </section>
   </main>
 
 </body>

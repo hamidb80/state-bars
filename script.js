@@ -1,15 +1,6 @@
-// -------- DOM Utils --------------------
+// -------- DataBase Utils ---------------
 
-function q(sel) {
-  return document.querySelector(sel)
-}
-
-function qa(sel) {
-  return document.querySelectorAll(sel)
-}
-
-// -------- DATABASE Utils ---------------
-
+// ------ Low Level APIs
 function clearDB() {
   return window.localStorage.clear()
 }
@@ -28,20 +19,44 @@ function setItemDB(key, val) {
   return window.localStorage.setItem(key, JSON.stringify(val))
 }
 
-// ------ Keys -------------------------
+// ------ Keys 
 
 const
   TasksK = 'tasks',
-  HistoryK = 'history',
+  HistoryK = 'history'
 
-// -------------------------------------
+// ------ Models
 
-function newTask(){
-
+function newAction(name, emoji, boost, desc) {
+  return {name, emoji, boost, desc}
 }
 
-// -------------------------------------
+function newTask(name, actions, max, decRate) {
+  return {name, actions, max, decRate}
+}
 
+function newRecord(taskID, time, boost, desc) {
+  return {taskID, time, boost, title, desc}
+}
+
+// ------  Actions 
+
+function add(taskID, boost) {
+  return [taskID, time, boost]
+}
+
+// ------- UI Setup -----------------------------
+
+// ------ DOM Utils
+function q(sel) {
+  return document.querySelector(sel)
+}
+
+function qa(sel) {
+  return document.querySelectorAll(sel)
+}
+
+// ------ macros 
 up.macro('[smooth-link]', link => {
   setAttrs(link, {
     'up-transition': 'cross-fade',
@@ -50,11 +65,9 @@ up.macro('[smooth-link]', link => {
   })
 })
 
-function init() {
-  let tasks = getItemDB(TasksK) ?? []
-  rivets.bind(q`[me]`, { tasks })
-}
+// ------ compilers
+up.compiler('#app-page', el => {
+  let tasks = getItemDB(TasksK) ?? [1, 2]
+  rivets.bind(q`[tasks]`, { tasks })
+})
 
-// -------------------------------------
-
-init()
