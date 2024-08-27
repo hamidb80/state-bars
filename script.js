@@ -1,8 +1,17 @@
 // -------- Other Utils -----------------
 
+function toArray(arrayLike) {
+  return Array.from(arrayLike)
+}
+
 function uuid() {
   return self.crypto.randomUUID()
 }
+
+function reJSON(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
 
 // -------- DataBase Utils ---------------
 
@@ -27,9 +36,8 @@ function setItemDB(key, val) {
 
 // ------ Keys 
 
-const
-  TasksK = 'tasks',
-  HistoryK = 'history'
+const TasksK = 'tasks'
+const HistoryK = 'history'
 
 // ------ Models
 
@@ -37,8 +45,8 @@ function newAction(name, emoji, boost, desc) {
   return { name, emoji, boost, desc }
 }
 
-function newTask(name, actions, max, decRate) {
-  return { name, actions, max, decRate }
+function newTask(id, name, actions, max, decrate) {
+  return { id, name, actions, max, decrate }
 }
 
 function newRecord(taskID, time, boost, desc) {
@@ -71,6 +79,7 @@ function setAttrs(el, attrsObj) {
 // ------ Globals 
 
 var tasks = undefined
+var selectedTask = undefined
 
 function getTasks() {
   return getItemDB(TasksK) ?? []
@@ -79,6 +88,16 @@ function getTasks() {
 function initGlobalsIfNot() {
   if (tasks === undefined)
     tasks = getTasks()
+
+  if (selectedTask === undefined)
+    selectedTask = {
+      actions: [
+        {
+          name: "wow"
+        }
+      ]
+    }
+
 }
 
 // ------ UI 
@@ -96,6 +115,19 @@ up.macro('[smooth-link]', link => {
 up.compiler('#app-page', el => {
   rivets.bind(el, { tasks })
 })
+
 up.compiler('#task-settings-page', el => {
-  rivets.bind(el, { tasks })
+  rivets.bind(el, { task: selectedTask })
+})
+
+up.compiler('#task-settings-apply', el => {
+  el.onclick = () => {
+    console.log(reJSON(selectedTask))
+  }
+})
+
+up.compiler('#task-settings-add-action', el => {
+  el.onclick = () => {
+
+  }
 })

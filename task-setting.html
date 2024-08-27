@@ -27,26 +27,27 @@
 
     <section id="task-settings-page" class="container">
       <div>
-        <input name="task-id" type="hidden" value="">
+        <input rv-value="task.id" name="task-id" type="hidden">
 
         <fieldset class="my-2">
-          <input type="text" name="name" class="form-control" placeholder="name">
+          <input rv-value="task.name" name="task-name" type="text" class="form-control" placeholder="name">
         </fieldset>
         <fieldset class="my-2">
-          <textarea class="form-control" rows="4" placeholder="description"></textarea>
+          <textarea rv-value="task.desc" name="task-desc" class="form-control" rows="4" placeholder="description"></textarea>
         </fieldset>
         <fieldset class="my-2">
-          <input name="max" type="number" class="form-control" placeholder="max" step="1">
+          <input rv-value="task.max" name="task-max" type="number" class="form-control" placeholder="max" step="1">
         </fieldset>
         <fieldset class="my-2">
-          <input name="dec-rate" type="number" class="form-control" placeholder="decrease rate [per hour]" step="1">
+          <input rv-value="task.decrate" name="task-dec-rate" type="number" class="form-control" placeholder="decrease rate [per hour]"
+            step="1">
         </fieldset>
       </div>
 
 
       <div class="row gx-2">
         <div class="col col-12 col-sm-4">
-          <button class="btn btn-sm btn-outline-primary w-100 align-self-center">
+          <button id="task-settings-apply" class="btn btn-sm btn-outline-primary w-100 align-self-center">
             <span>apply</span>
             <i class="bi bi-check-lg"></i>
           </button>
@@ -70,27 +71,23 @@
         <i class="bi bi-check-square"></i>
       </h3>
 
-      <div rv-each-ac="task.actions">
-        <h3># {% ac %}</h3>
+      <div rv-each-ac="task.actions" class="task-action">
+        <h3># {index}</h3>
 
         <fieldset class="my-2">
-          <input type="text" name="name" class="form-control" placeholder="name">
+          <input rv-value="ac.name" name="action-name" type="text" class="form-control" placeholder="name">
         </fieldset>
 
         <fieldset class="my-2">
-          <textarea class="form-control" rows="4" placeholder="description"></textarea>
+          <input rv-value="ac.emoji" name="action-emoji" type="text" class="form-control" placeholder="emoji" maxlength="4">
         </fieldset>
 
         <fieldset class="my-2">
-          <input name="max" type="number" class="form-control" placeholder="max" step="1">
-        </fieldset>
-
-        <fieldset class="my-2">
-          <input name="dec-rate" type="number" class="form-control" placeholder="decrease rate [per hour]" step="1">
+          <input rv-value="ac.boost" name="action-boost" type="number" class="form-control" placeholder="boost" step="1">
         </fieldset>
       </div>
 
-      <button class="btn btn-sm btn-outline-primary w-100">
+      <button id="#task-settings-add-action" class="btn btn-sm btn-outline-primary w-100">
         <span>add action</span>
         <i class="bi bi-plus-square"></i>
       </button>
