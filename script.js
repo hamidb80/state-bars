@@ -60,7 +60,7 @@ function newRecord(time, boost) {
 // ------ Domain Logic
 
 function computeState(task, records) {
-  task.created 
+  task.created
   task.decrate
   return 10
 }
@@ -127,8 +127,12 @@ function initGlobalsIfNot() {
 // ------ UI 
 
 rivets.formatters['not'] = b => !b
-rivets.formatters['task_url'] = task => {
+rivets.formatters['task_settings_url'] = task => {
   let suburl = q`#new-task-link`.getAttribute('href')
+  return suburl + '?task-id=' + task.id
+}
+rivets.formatters['task_stats_url'] = task => {
+  let suburl = q`#tast-stats-base`.getAttribute('href')
   return suburl + '?task-id=' + task.id
 }
 rivets.binders['task-settings-remove-action-click'] = (el, index) => {
@@ -206,3 +210,4 @@ up.compiler('#task-settings-add-action', el => {
 })
 
 // TODO HTML validate
+// TODO change color of bar according to the percent 

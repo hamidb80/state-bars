@@ -21,6 +21,8 @@
   <main>
     <section id="app-page" class="container">
 
+      <a id="tast-stats-base" href="/task-stats.html"></a>
+
       <h1 class="text-center my-4">
         <span>States</span>
         <i class="bi bi-bar-chart-steps"></i>
@@ -50,7 +52,10 @@
                 rv-click-action-btn="action.boost">
                 { action.emoji }
               </div>
-              <a rv-href="task | task_url" smooth-link class="btn btn-sm btn-outline-dark">
+              <a rv-href="task | task_stats_url" smooth-link class="btn btn-sm btn-outline-dark">
+                <i class="bi bi-graph-up"></i>
+              </a>
+              <a rv-href="task | task_settings_url" smooth-link class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-three-dots"></i>
               </a>
             </div>
