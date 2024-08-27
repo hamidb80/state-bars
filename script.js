@@ -1,3 +1,9 @@
+// -------- Other Utils -----------------
+
+function uuid() {
+  return self.crypto.randomUUID()
+}
+
 // -------- DataBase Utils ---------------
 
 // ------ Low Level APIs
@@ -28,21 +34,20 @@ const
 // ------ Models
 
 function newAction(name, emoji, boost, desc) {
-  return {name, emoji, boost, desc}
+  return { name, emoji, boost, desc }
 }
 
 function newTask(name, actions, max, decRate) {
-  return {name, actions, max, decRate}
+  return { name, actions, max, decRate }
 }
 
 function newRecord(taskID, time, boost, desc) {
-  return {taskID, time, boost, title, desc}
+  return { taskID, time, boost, title, desc }
 }
 
 // ------  Actions 
 
 function add(taskID, boost) {
-  return [taskID, time, boost]
 }
 
 // ------- UI Setup -----------------------------
@@ -70,4 +75,3 @@ up.compiler('#app-page', el => {
   let tasks = getItemDB(TasksK) ?? [1, 2]
   rivets.bind(q`[tasks]`, { tasks })
 })
-
