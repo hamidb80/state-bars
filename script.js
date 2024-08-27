@@ -60,7 +60,9 @@ function newRecord(time, boost) {
 // ------ Domain Logic
 
 function computeState(task, records) {
+  task.created 
   task.decrate
+  return 10
 }
 
 // ------ DOM Utils
@@ -107,12 +109,14 @@ function saveTask(task) {
   tasks[task.id] = task
   return saveAllTasks(tasks)
 }
-function saveRecordFor(taskid, time, boost) {
-  records[taskid].push(newRecord(time, boost))
-  return saveAllRecords(records)
-}
 function getRecordFor(taskid) {
   return records[taskid] ?? []
+}
+function saveRecordFor(taskid, time, boost) {
+  let recs = getRecordFor(taskid)
+  recs.push(newRecord(time, boost))
+  records[taskid] = recs
+  return saveAllRecords(records)
 }
 
 function initGlobalsIfNot() {
@@ -126,6 +130,19 @@ rivets.formatters['not'] = b => !b
 rivets.formatters['task_url'] = task => {
   let suburl = q`#new-task-link`.getAttribute('href')
   return suburl + '?task-id=' + task.id
+}
+rivets.binders['task-settings-remove-action-click'] = (el, index) => {
+  el.onclick = () => {
+    selectedTask.actions.splice(index, 1)
+  }
+}
+rivets.binders['click-action-btn'] = (el, boost) => {
+  el.onclick = () => {
+    saveRecordFor(
+      el.getAttribute('task-id'),
+      unow(),
+      parseInt(boost))
+  }
 }
 
 up.macro('main', initGlobalsIfNot)
@@ -157,14 +174,7 @@ up.compiler('#app-page', el => {
 up.compiler('#task-settings-page', el => {
   let qp = new URLSearchParams(window.location.search)
   let taskid = qp.get('task-id')
-
   selectedTask = taskid ? purify(tasks[taskid]) : newTask(uuid(), '', [], '', '', unow())
-
-  rivets.binders['task-settings-remove-action-click'] = (el, index) => {
-    el.onclick = () => {
-      selectedTask.actions.splice(index, 1)
-    }
-  }
   rivets.bind(el, { task: selectedTask })
 })
 

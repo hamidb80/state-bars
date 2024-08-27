@@ -46,7 +46,8 @@
               { task.name }
             </h4>
             <div>
-              <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark">
+              <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark" rv-task-id="task.id"
+                rv-click-action-btn="action.boost">
                 { action.emoji }
               </div>
               <a rv-href="task | task_url" smooth-link class="btn btn-sm btn-outline-dark">
