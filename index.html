@@ -30,28 +30,32 @@
         </p>
       </div>
 
-      <div>
-        <fieldset>
-          <label class="form-label mt-4" for="readOnlyInput">Readonly input</label>
-          <input class="form-control" id="readOnlyInput" type="text" placeholder="Readonly input here..." readonly="">
-        </fieldset>
-      </div>
-
-      <button class="btn btn-sm btn-outline-primary w-100">
-        <span>
-          new task
-        </span>
+      <a href="/task-setting.html" smooth-link class="btn btn-sm btn-outline-primary w-100">
+        <span>new task</span>
         <i class="bi bi-plus-square"></i>
-      </button>
+      </a>
 
-      <ul tasks>
-        <li rv-each-task="tasks">
+      <div tasks>
+        <div rv-each-task="tasks">
+          <div class="row">
+            <h4 class="col-md-6 col-sm-12" dir="auto">
+              { task.name }
+            </h4>
+            <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+              <div tv-each-action="task.actions" class="btn btn-sm btn-outline-dark">
+                { action.emoji }
+              </div>
+              <div class="btn btn-sm btn-outline-dark">
+                <i class="bi bi-three-dots"></i>
+              </div>
+            </div>
+          </div>
           <div class="progress">
             <div class="progress-bar progress-bar-striped" rv-style="task"></div>
           </div>
-          <span>{ task }</span>
-        </li>
-      </ul>
+        </div>
+      </div>
+
     </section>
   </main>
 
