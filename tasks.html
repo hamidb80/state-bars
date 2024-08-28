@@ -21,7 +21,7 @@
   <main>
     <section id="app-page" class="container">
 
-      <a id="tast-stats-base" href="/task-stats.html"></a>
+      <a id="test-stats-base" href="/task-stats.html"></a>
 
       <h1 class="text-center my-4">
         <span>States</span>
@@ -42,16 +42,12 @@
       </h3>
 
       <div id="active-tasks">
-        <div rv-each-task="active_tasks" class="my-3">
+        <div rv-each-task="active_tasks" class="my-3" rv-id="task | task_element_id">
           <div class="d-flex justify-content-between">
-            <h4 class dir="auto">
-              { task.name }
-            </h4>
+            <h4 class dir="auto" rv-text="task.name"></h4>
             <div>
               <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark" rv-task-id="task.id"
-                rv-click-action-btn="action.boost">
-                { action.emoji }
-              </div>
+                rv-click-action-btn="action.boost" rv-text="action.emoji" rv-task-id="task.id"></div>
               <a rv-href="task | task_stats_url" smooth-link class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-graph-up"></i>
               </a>
@@ -61,7 +57,7 @@
             </div>
           </div>
           <div class="progress">
-            <div class="progress-bar progress-bar-striped" rv-style="task"></div>
+            <div class="progress-bar progress-bar-striped"></div>
           </div>
         </div>
       </div>
@@ -80,12 +76,13 @@
         <div rv-each-task="archived_tasks" class="my-2">
           <div class="d-flex justify-content-between">
             <h5 class dir="auto">
-              <strike>
-                { task.name }
-              </strike>
+              <strike rv-text="task.name"></strike>
             </h5>
             <div>
-              <a rv-href="task | task_url" smooth-link class="btn btn-sm btn-outline-dark">
+              <a rv-href="task | task_stats_url" smooth-link class="btn btn-sm btn-outline-dark">
+                <i class="bi bi-graph-up"></i>
+              </a>
+              <a rv-href="task | task_settings_url" smooth-link class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-three-dots"></i>
               </a>
             </div>
