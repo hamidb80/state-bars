@@ -7,33 +7,27 @@ import std/[
   times
 ]
 
+# -------- conventions --------------------------- 
 
-template mkdir(p): untyped = 
-  createDir p
-  
-template cpdir(a, b): untyped = 
-  copyDir a, b
-  
-template mvdir(a, b): untyped = 
-  moveDir a, b
-  
-template str(a): untyped = 
-  $a
-  
+template mkdir(p):    untyped = createDir p
+template rmdir(p):    untyped = removeDir p
+template cpdir(a, b): untyped = copyDir   a, b
+template mvdir(a, b): untyped = moveDir   a, b
+template str(a): untyped = $a
+
+# -------- helpers ------------------------------- 
+
 template `|`(c, p): untyped =
   let t = p.split '/'
   config.getSectionValue(t[0], t[1])
-
 
 proc cliExec(cmd: string) = 
   echo cmd
   discard execShellCmd cmd
 
-const help = """
-available commands:
-  + build
-  + deploy
-"""
+# -------- main ---------------------------------- 
+
+const help = "available commands: build, deploy"
 
 when isMainModule:
   let 
@@ -66,6 +60,7 @@ when isMainModule:
   if paramCount() == 1:
     case paramStr 1
     of "build":
+      rmdir              builddir
       mkdir              builddir
       cpdir partialsdir, builddir
       cpdir scriptsdir,  finalDistDir
