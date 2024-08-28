@@ -12,6 +12,9 @@ template mkdir(p): untyped =
 template cpdir(a, b): untyped = 
   copyDir a, b
   
+template mvdir(a, b): untyped = 
+  moveDir a, b
+  
 template str(a): untyped = 
   $a
   
@@ -70,7 +73,7 @@ when isMainModule:
 
     of "deploy":
       cliExec "git checkout pages"
-      cpdir    builddir,  "./"
+      mvdir    builddir,  "./"
       cliExec "git add ."
       cliExec "git commit -m 'up'"
       cliExec "git push"
