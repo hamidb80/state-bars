@@ -309,17 +309,15 @@ up.macro('[smooth-link]', link => {
   })
 })
 
-function copyArrInto(dest, src) {
-  dest.length = 0
-  for (const n of src)
-    dest.push(n)
-}
-
 function computeTasksList() {
   let sortedTasks = task_ids_in_order.map(id => tasks[id])
   let t = filterchop(sortedTasks, t => !t.archived)
-  copyArrInto(active_tasks, t[0])
-  copyArrInto(archived_tasks, t[1])
+  
+  active_tasks.length = 0
+  for (const n of t[0])
+    active_tasks.push(n)
+
+  archived_tasks = t[1]
 }
 
 up.compiler('#task-list-page', el => {
