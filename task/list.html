@@ -12,8 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
 
-<script defer src="/1724825468-dist/runtime.js"></script>
-  <title>States</title>
+<script defer src="/state-bars/1724829613-dist/runtime.js"></script>
+  <title>Tasks</title>
 </head>
 
 <body>
@@ -21,22 +21,39 @@
   <main>
     <section id="app-page" class="container">
 
-      <a id="test-stats-base" href="/task/stats.html"></a>
+      <a id="test-stats-base" href="/state-bars/task/stats.html"></a>
 
       <h1 class="text-center my-4">
         <span>States</span>
         <i class="bi bi-segmented-nav"></i>
       </h1>
 
-      <div class="alert alert-warning px-3 py-1">
+      <div class="alert alert-warning">
         <i class="bi bi-exclamation-diamond"></i>
         <strong>
-          note:
+          <em>
+            Note:
+          </em>
         </strong>
         <span>keep your states high</span>
       </div>
 
-      <h3 class="mt-5 mb-3 text-center">
+      <div class="row gx-2">
+        <div class="col-sm-10 col-12">
+          <a href="/state-bars/task/settings.html" smooth-link id="new-task-link" class="btn btn-sm btn-outline-primary w-100">
+            <span>New Task</span>
+            <i class="bi bi-plus-square"></i>
+          </a>
+        </div>
+        <div class="col-sm-2 col-12">
+          <a href="/state-bars/" smooth-link class="btn btn-sm btn-outline-danger w-100">
+            <span>Back</span>
+            <i class="bi bi-arrow-return-left"></i>
+          </a>
+        </div>
+      </div>
+
+      <h3 class="my-4 text-center">
         <span>Active</span>
         <i class="bi bi-play"></i>
       </h3>
@@ -61,11 +78,6 @@
           </div>
         </div>
       </div>
-
-      <a href="/task/settings.html" id="new-task-link" smooth-link class="btn btn-sm btn-outline-primary w-100">
-        <span>new task</span>
-        <i class="bi bi-plus-square"></i>
-      </a>
 
       <h3 class="mt-5 mb-3 text-center">
         <span>Archived</span>
