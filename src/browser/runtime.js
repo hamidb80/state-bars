@@ -28,6 +28,12 @@ function sec2hour(secs) {
   return secs / (60 * 60)
 }
 
+function copyArrInto(dest, src) {
+  dest.length = 0
+  for (const n of src)
+    dest.push(n)
+}
+
 function toArray(arrayLike) {
   return Array.from(arrayLike)
 }
@@ -173,6 +179,8 @@ var task_ids_in_order = undefined
 var archived_tasks = undefined
 var active_tasks = undefined
 
+var show_notif = (msg, kind, delay) => console.log(msg, kind, delay)
+
 function saveAllTasks(tasksMap) {
   return setItemDB(TasksK, tasksMap)
 }
@@ -276,8 +284,6 @@ rivets.binders['init-task-item'] = (el, taskid) => {
 rivets.binders['task-item-go-up-btn'] = (el, taskid) => {
   el.onclick = () => {
     let i = task_ids_in_order.indexOf(taskid)
-    console.log(taskid)
-
     if (i !== 0) {
       task_ids_in_order.splice(i, 1)
       task_ids_in_order.splice(i - 1, 0, taskid)
@@ -295,6 +301,7 @@ rivets.binders['task-item-go-down-btn'] = (el, taskid) => {
       task_ids_in_order.splice(i, 1)
       task_ids_in_order.splice(i + 1, 0, taskid)
       setItemDB(OrderK, task_ids_in_order)
+      computeTasksList()
     }
   }
 }
@@ -308,12 +315,6 @@ up.macro('[smooth-link]', link => {
     'up-follow': '',
   })
 })
-
-function copyArrInto(dest, src) {
-  dest.length = 0
-  for (const n of src)
-    dest.push(n)
-}
 
 function computeTasksList() {
   let sortedTasks = task_ids_in_order.map(id => tasks[id])
@@ -349,7 +350,7 @@ up.compiler('#task-settings-archive', el => {
 up.compiler('#task-settings-apply', el => {
   el.onclick = () => {
     saveTask(selectedTask)
-    console.log('saved!') // TODO notif
+    show_notif("Applied!", 'success')
   }
 })
 
@@ -358,6 +359,7 @@ up.compiler('#task-settings-delete', el => {
     delete tasks[selectedTask.id]
     task_ids_in_order = task_ids_in_order.filter(id => id !== selectedTask.id)
     saveAllTasks(tasks)
+    show_notif("Deleted!", 'success')
   }
 })
 
@@ -370,6 +372,7 @@ up.compiler('#task-settings-add-action', el => {
 up.compiler('#task-stats-apply-btn', el => {
   el.onclick = () => {
     saveRecordsFor(taskidFromUrl(), selectedRecords)
+    show_notif("Applied!", 'success')
   }
 })
 
@@ -390,8 +393,10 @@ up.compiler('#import-db-btn', el => {
       let reader = new FileReader()
       reader.onload = evt => {
         let json = JSON.parse(evt.target.result)
-        for (let key in json)
+        for (let key in json) {
           setItemDB(key, json[key])
+        }
+        show_notif("DB imported!", 'success')
       }
       reader.readAsText(file)
     }
@@ -403,8 +408,21 @@ up.compiler('#clear-db-btn', el => {
   el.onclick = () => {
     if (confirm("Are you sure?")) {
       clearDB()
+      show_notif("DB cleared!", 'success')
     }
   }
 })
 
-// TODO add toast/notif on error/success
+up.compiler('#notif', el => {
+  el.style.transform = 'translateY(+100%)'
+  el.setAttribute('class', `fixed-bottom p-2`)
+
+  show_notif = (msg, kind, delay = 3000) => {
+    el.innerHTML = msg
+    el.setAttribute('class', `fixed-bottom mx-2 p-2 alert alert-${kind}`)
+    el.style.transform = 'translateY(0)'
+    setTimeout(() => {
+      el.style.transform = 'translateY(+150%)'
+    }, delay)
+  }
+})
