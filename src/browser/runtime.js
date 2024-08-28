@@ -359,6 +359,7 @@ up.compiler('#task-settings-delete', el => {
     delete tasks[selectedTask.id]
     task_ids_in_order = task_ids_in_order.filter(id => id !== selectedTask.id)
     saveAllTasks(tasks)
+    setItemDB(OrderK, task_ids_in_order)
     show_notif("Deleted!", 'success')
   }
 })
