@@ -12,11 +12,12 @@
 <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
 
-<script defer src="/state-bars/1724832987-dist/runtime.js"></script>
+<script defer src="/state-bars/1724846851-dist/runtime.js"></script>
   <title>Task Settings</title>
 </head>
 
 <body>
+  <div id="notif"></div>
 
   <main>
 
@@ -35,11 +36,12 @@
             placeholder="description"></textarea>
         </fieldset>
         <fieldset class="my-2">
-          <input rv-value="task.max" name="task-max" type="number" class="form-control" placeholder="max" step="1">
+          <input rv-value="task.max" name="task-max" type="number" class="form-control" placeholder="max" step="1"
+            required>
         </fieldset>
         <fieldset class="my-2">
           <input rv-value="task.decrate" name="task-dec-rate" type="number" class="form-control"
-            placeholder="decrease rate [per hour]" step="1">
+            placeholder="decrease rate [per hour]" step="1" required>
         </fieldset>
 
 
@@ -94,12 +96,11 @@
         </fieldset>
 
         <fieldset class="my-2">
-          <input rv-value="ac.emoji" name="action-emoji" type="text" class="form-control" placeholder="emoji"
-            maxlength="4">
+          <input rv-value="ac.emoji" name="action-emoji" type="text" class="form-control" placeholder="emoji">
         </fieldset>
 
         <fieldset class="my-2">
-          <input rv-value="ac.boost" name="action-boost" type="number" class="form-control" placeholder="boost"
+          <input rv-value="ac.boost" name="action-boost" type="number" class="form-control" placeholder="boost" required
             step="1">
         </fieldset>
       </div>

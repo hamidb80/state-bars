@@ -12,14 +12,15 @@
 <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
 
-<script defer src="/state-bars/1724832987-dist/runtime.js"></script>
+<script defer src="/state-bars/1724846851-dist/runtime.js"></script>
   <title>Tasks</title>
 </head>
 
 <body>
+  <div id="notif"></div>
 
   <main>
-    <section id="app-page" class="container">
+    <section id="task-list-page" class="container">
 
       <a id="test-stats-base" href="/state-bars/task/stats.html"></a>
 
@@ -59,15 +60,21 @@
       </h3>
 
       <div id="active-tasks">
-        <div rv-each-task="active_tasks" class="my-3" rv-id="task | task_element_id">
+        <div rv-each-task="active_tasks" class="my-3" rv-id="task | task_element_id" rv-init-task-item="task.id">
           <div class="d-flex justify-content-between">
             <h4 class dir="auto" rv-text="task.name"></h4>
             <div>
-              <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark" rv-task-id="task.id"
-                rv-click-action-btn="action.boost" rv-text="action.emoji" rv-task-id="task.id"></div>
+              <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark" rv-click-action-btn="action.boost"
+                rv-text="action.emoji" rv-task-id="task.id"></div>
               <a rv-href="task | task_stats_url" smooth-link class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-graph-up"></i>
               </a>
+              <button class="btn btn-sm btn-outline-dark" rv-task-item-go-up-btn="task.id">
+                <i class="bi bi-chevron-up"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-dark" rv-task-item-go-down-btn="task.id">
+                <i class="bi bi-chevron-down"></i>
+              </button>
               <a rv-href="task | task_settings_url" smooth-link class="btn btn-sm btn-outline-dark">
                 <i class="bi bi-three-dots"></i>
               </a>
