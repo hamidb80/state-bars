@@ -7,7 +7,7 @@ import std/[
 
 
 template mkdir(p): untyped = 
-  discard existsOrCreateDir p
+  createDir p
   
 template cpdir(a, b): untyped = 
   copyDir a, b
