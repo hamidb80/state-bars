@@ -223,8 +223,11 @@ function taskElemId(task) {
 function setProgressBar(taskid) {
   let task = tasks[taskid]
   let pbar = q(`#${taskElemId(task)} .progress-bar`)
-  let percent = 100 * computeState(task, shallowCopy(getRecordsFor(task.id))) / task.max
+  let ptxt = q(`#${taskElemId(task)} .progress-text`)
+  let status = computeState(task, shallowCopy(getRecordsFor(task.id)))
+  let percent = 100 * status / task.max
   pbar.style.width = percent + '%'
+  ptxt.innerHTML = status.toFixed(2)
 }
 
 rivets.formatters['not'] = b => !b
@@ -249,7 +252,8 @@ rivets.binders['task-settings-remove-action-click'] = (el, index) => {
 }
 rivets.binders['task-stats-remove-record-click'] = (el, index) => {
   el.onclick = () => {
-    selectedRecords.splice(index, 1)
+    let reverseIndex = selectedRecords.length - 1 - index // because sorted DESC in HTML and sorted ASC in `selectedRecords`
+    selectedRecords.splice(reverseIndex, 1)
   }
 }
 
