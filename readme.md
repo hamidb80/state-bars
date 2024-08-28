@@ -1,6 +1,6 @@
 # Status Bars
 
-an app based on [Life is a game. This is your strategy guide](https://oliveremberton.com/2014/life-is-a-game-this-is-your-strategy-guide/).
+An app based on this article by Oliver Emberton: [Life is a game. This is your strategy guide](https://oliveremberton.com/2014/life-is-a-game-this-is-your-strategy-guide/).
 
 ## Tech Stack
 ### Front-End
