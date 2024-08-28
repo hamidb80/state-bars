@@ -82,6 +82,17 @@ function setItemDB(key, val) {
   return window.localStorage.setItem(key, JSON.stringify(val))
 }
 
+function getAllItemsDB() {
+  let result = {}
+  for (let i = 0; i < window.localStorage.length; i++) {
+    let key = window.localStorage.key(i)
+    let valueStr = window.localStorage.getItem(key)
+    result[key] = JSON.parse(valueStr)
+  }
+  return result
+}
+
+
 // ------ Keys 
 
 const TasksK = 'tasks'
@@ -132,6 +143,22 @@ function setAttrs(el, attrsObj) {
   for (let key in attrsObj)
     el.setAttribute(key, attrsObj[key])
 }
+
+function newElement(tag, attrs = {}) {
+  let el = document.createElement(tag)
+  setAttrs(el, attrs)
+  return el
+}
+
+function downloadFile(name, mime, content) {
+  let a = newElement('a')
+  a.href = URL.createObjectURL(new Blob([content], { type: mime }))
+  a.download = name
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}
+
 
 // ------- Setup ------------------------------
 
@@ -297,5 +324,40 @@ up.compiler('#tasks-stats-apply-btn', el => {
   }
 })
 
+up.compiler('#export-db-btn', el => {
+  el.onclick = () => {
+    downloadFile(
+      'life-is-like-a-game.json',
+      'application/json',
+      JSON.stringify(getAllItemsDB()))
+  }
+})
+
+up.compiler('#import-db-btn', el => {
+  el.onclick = () => {
+    let target = newElement('input', { type: "file", accept: ".json" })
+    target.onchange = e => {
+      let file = e.target.files[0]
+      let reader = new FileReader()
+      reader.onload = evt => {
+        let json = JSON.parse(evt.target.result)
+        for (let key in json)
+          setItemDB(key, json[key])
+      }
+      reader.readAsText(file)
+    }
+    target.click()
+  }
+})
+
+up.compiler('#clear-db-btn', el => {
+  el.onclick = () => {
+    if (confirm("Are you sure?")) {
+      clearDB()
+    }
+  }
+})
+
 // TODO HTML validate
-// TODO change color of bar according to the percent 
+// TODO change color of bar according to the percent
+// TODO add toast/notif on error/success

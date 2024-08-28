@@ -3,7 +3,7 @@
 
 <head>
   {{common-head.html}}
-  <title>States</title>
+  <title>Task Stats</title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <i class="bi bi-graph-up"></i>
       </h1>
 
-      <div class="row gx-1">
+      <div class="row gx-1 my-4">
         <div class="col col-6">
           <button id="tasks-stats-apply-btn" smooth-link class="btn btn-sm btn-outline-primary w-100">
             <span>Apply</span>
@@ -25,14 +25,16 @@
         </div>
         <div class="col col-6">
           <a href="@/task/list.html" smooth-link class="btn btn-sm btn-outline-warning w-100">
-            <span>Go back</span>
+            <span>Back</span>
             <i class="bi bi-box-arrow-left"></i>
           </a>
         </div>
       </div>
 
       <h4>
-        <span>for task: </span>
+        <em>
+          <span>Task: </span>
+        </em>
         <span rv-text="task.name"></span>
       </h4>
 
