@@ -1,3 +1,5 @@
+# based on Nim v2.0.0, no libs, just standard library
+
 import std/[
   strutils, nre,
   parsecfg,
