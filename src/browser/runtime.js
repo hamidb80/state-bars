@@ -269,9 +269,8 @@ rivets.binders['task-stats-remove-record-click'] = (el, index) => {
 }
 
 rivets.binders['click-action-btn'] = (el, boost) => {
-  let taskid = el.getAttribute('task-id')
-
   el.onclick = () => {
+    let taskid = el.getAttribute('task-id')
     addSaveRecordFor(taskid, unixNow(), parseInt(boost))
     setProgressBar(taskid)
   }
