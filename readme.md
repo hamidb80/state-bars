@@ -7,6 +7,7 @@ An app based on this article by Oliver Emberton: [Life is a game. This is your s
 #### Script
 - [Unpoly](https://unpoly.com)
 - [Rivet](http://rivetsjs.com)
+- No, I didn't use ReactJs, in fact I hate it 😎
 
 #### UI
 - Bootstrap
