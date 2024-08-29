@@ -124,11 +124,12 @@ function newRecord(time, boost) {
 function computeState(task, records) {
   records.push(newRecord(unixNow(), 0))
 
+  let decr = parseFloat(task.decrate)
   var timecurr = task.created
   var boostlevel = 0
 
   for (let [rtime, boost] of records) {
-    let decay = task.decrate * sec2hour(rtime - timecurr)
+    let decay = decr * sec2hour(rtime - timecurr)
     boostlevel = Math.min(task.max, Math.max(0, boostlevel - decay) + boost)
     timecurr = rtime
   }
@@ -271,7 +272,7 @@ rivets.binders['task-stats-remove-record-click'] = (el, index) => {
 rivets.binders['click-action-btn'] = (el, boost) => {
   el.onclick = () => {
     let taskid = el.getAttribute('task-id')
-    addSaveRecordFor(taskid, unixNow(), parseInt(boost))
+    addSaveRecordFor(taskid, unixNow(), parseFloat(boost))
     setProgressBar(taskid)
   }
 }
