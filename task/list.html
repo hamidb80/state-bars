@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
 
-<script defer src="/state-bars/1724911876-dist/runtime.js"></script>
+<script defer src="/state-bars/1724912749-dist/runtime.js"></script>
   <title>Tasks</title>
 </head>
 
@@ -61,9 +61,9 @@
 
       <div id="active-tasks">
         <div rv-each-task="active_tasks" class="my-3" rv-id="task | task_element_id" rv-init-task-item="task.id">
-          <div class="row justify-content-between">
-            <h4 class="col-auto" dir="auto" rv-text="task.name"></h4>
-            <div class="col-auto my-1">
+          <div class="row justify-content-between align-items-center">
+            <h4 class="col-12 col-md-6" dir="auto" rv-text="task.name"></h4>
+            <div class="col-12 col-md-6 d-flex flex-wrap justify-content-end my-1">
               <div rv-each-action="task.actions" class="btn btn-sm btn-outline-dark" rv-click-action-btn="action.boost"
                 rv-text="action.emoji" rv-task-id="task.id"></div>
               <a rv-href="task | task_stats_url" smooth-link class="btn btn-sm btn-outline-dark">
