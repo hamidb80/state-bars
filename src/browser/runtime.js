@@ -1,5 +1,13 @@
 // -------- Other Utils -----------------
 
+function genDebounce(delay, func) {
+  let timeoutId
+  return (...args) => {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => func.apply(this, args), delay)
+  }
+}
+
 function p2(smth) {
   return String(smth).padStart(2, '0')
 }
@@ -104,6 +112,7 @@ function getAllItemsDB() {
 const TasksK = 'tasks'
 const OrderK = 'order-of-tasks'
 const RecordsK = 'history'
+const PadK = 'scratch-pad-content'
 
 // ------ Models
 
@@ -173,10 +182,11 @@ function downloadFile(name, mime, content) {
 // ------ Globals 
 
 var tasks = undefined
-var selectedTask = undefined
 var records = undefined
-var selectedRecords = undefined
 var task_ids_in_order = undefined
+
+var selectedTask = undefined
+var selectedRecords = undefined
 var archived_tasks = undefined
 var active_tasks = undefined
 
@@ -426,4 +436,11 @@ up.compiler('#notif', el => {
       el.style.transform = 'translateY(+150%)'
     }, delay)
   }
+})
+
+
+up.compiler('#scratch-pad-area', el => {
+  let padUpdater = genDebounce(200, v => setItemDB(PadK, v))
+  el.value = getItemDB(PadK)
+  el.oninput = e => padUpdater(e.target.value)
 })
